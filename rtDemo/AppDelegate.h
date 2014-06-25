@@ -10,6 +10,7 @@
 extern NSString *const ReplyToTweetClicked;
 extern NSString *const FavoriteClicked;
 extern NSString *const RetweetClicked;
+extern NSString *const TweetCreatedNotification;
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

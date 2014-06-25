@@ -23,10 +23,10 @@ static NSDateFormatter *formatter = nil;
     [[NSNotificationCenter defaultCenter] postNotificationName:ReplyToTweetClicked object:self userInfo: @{@"sender": sender, @"tweet": self.tweet}];
 }
 - (IBAction)onFavoriteClick:(id)sender {
-    [[NSNotificationCenter defaultCenter] postNotificationName:FavoriteClicked object:self userInfo: @{@"sender": sender, @"tweet": self.tweet}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:FavoriteClicked object:self userInfo: @{@"sender": sender, @"tweet": _tweet}];
 }
 - (IBAction)onRetweetClick:(id)sender {
-    [[NSNotificationCenter defaultCenter] postNotificationName:RetweetClicked object:self userInfo: @{@"sender": sender, @"tweet": self.tweet}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:RetweetClicked object:self userInfo: @{@"sender": sender, @"tweet": _tweet}];
 }
 
 - (void)awakeFromNib

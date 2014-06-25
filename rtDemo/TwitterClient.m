@@ -85,6 +85,11 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure{
         return [self POST:@"1.1/favorites/create.json" parameters:params success:success failure:failure];
     
 }
+- (AFHTTPRequestOperation *)reTweetWithParams:(NSDictionary *)params andSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure{
+    NSString *postString = [NSString stringWithFormat:@"1.1/statuses/retweet/%@.json", params[@"id"]];
+    return [self POST:postString parameters:params success:success failure:failure];
+}
 - (BOOL)openURL:(NSURL *)url {
     if ([url.scheme isEqualToString:@"cptwitter"]) {
         if ([url.host isEqualToString:@"oauth"]) {

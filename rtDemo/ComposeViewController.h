@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface ComposeViewController : UIViewController
+@class Tweet;
+@interface ComposeViewController : UIViewController<UITextFieldDelegate>
 @property (nonatomic, strong) NSString *replyTo;
+@property (nonatomic, strong) Tweet *tweetCreated;
 @end

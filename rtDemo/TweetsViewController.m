@@ -71,13 +71,32 @@ AppDelegate *appDelegate;
      {
          [self setFavorite:notification.userInfo];
      }];
-    [center addObserverForName:ReplyToTweetClicked object:nil queue:nil usingBlock:^(NSNotification *notification)
+    [center addObserverForName:RetweetClicked object:nil queue:nil usingBlock:^(NSNotification *notification)
      {
-         [self onComposeButtonClick:notification.userInfo[@"tweet"]];
+         [self onRetweetButtonClick:notification.userInfo];
+     }];
+    
+    [center addObserverForName:TweetCreatedNotification object:nil queue:nil usingBlock:^(NSNotification *notification)
+     {
+         [self addNewTweet:notification.userInfo];
      }];
 
 
     [self pullToRefreshSetUp];
+}
+- (void) addNewTweet: (NSDictionary *)userInfo {
+    Tweet *currTweet = userInfo[@"tweet"];
+    [self.tweets insertObject:currTweet atIndex:0];
+    [self.tableView reloadData];
+}
+- (void) onRetweetButtonClick:(NSDictionary *)userInfo {
+    Tweet *currTweet = userInfo[@"tweet"];
+
+    [self.client reTweetWithParams:@{@"id": currTweet.id} andSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"retweet done!, %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"error retweeting!, %@", error);
+    }];
 }
 - (void)styleButton:(UIButton *)button forState:(BOOL)state{
     if (state) {

@@ -11,6 +11,10 @@
 #import "UIImageView+AFNetworking.h"
 #import "User.h"
 #import <QuartzCore/QuartzCore.h>
+#import "AppDelegate.h"
+#import "Tweet.h"
+
+NSString * const TweetCreatedNotification = @"TweetCreatedNotification";
 
 @interface ComposeViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *lblScreenName;
@@ -18,8 +22,10 @@
 @property (weak, nonatomic) IBOutlet UITextField *composeTextField;
 @property (nonatomic, strong) TwitterClient *client;
 @property (nonatomic, strong) User *user;
+@property (strong,nonatomic)UILabel *countLabel;
 
 @end
+NSInteger const MAX_TWEET_COUNT = 140;
 
 @implementation ComposeViewController
 
@@ -31,31 +37,15 @@
     }
     return self;
 }
-- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
-{
 
-//    [self.client tweetWithParams:@{@"status": self.composeTextView.text} andSuccess:^(AFHTTPRequestOperation *operation, id response) {
-//        NSLog(@"Tweeted %@", response);
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        NSLog(@"Tweet failed %@", error);
-//    }];
-//    [self.composeTextView resignFirstResponder];
-    return YES;
-}
-- (BOOL)textViewShouldReturn:(UITextView *)textView
-{
-//    [textView resignFirstResponder];
-//    [self.client tweetWithParams:@{@"status": self.composeTextView.text} andSuccess:^(AFHTTPRequestOperation *operation, id response) {
-//        NSLog(@"Tweeted %@", response);
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        NSLog(@"Tweet failed %@", error);
-//    }];
-    return YES;
-}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [self.client tweetWithParams:@{@"status": self.composeTextField.text} andSuccess:^(AFHTTPRequestOperation *operation, id response) {
         NSLog(@"Tweeted %@", response);
+        self.tweetCreated = [MTLJSONAdapter modelOfClass:[Tweet class] fromJSONDictionary:response error:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:TweetCreatedNotification object:self userInfo:@{@"tweet": self.tweetCreated}];
+
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Tweet failed %@", error);
     }];
@@ -81,7 +71,16 @@
     if(self.replyTo){
         self.composeTextField.text = [NSString stringWithFormat:@"@%@ ",self.replyTo];
     }
+    [self setUpSubViews];
 
+    self.composeTextField.delegate = self;
+    self.countLabel.text = [NSString stringWithFormat:@"%ld",(long)MAX_TWEET_COUNT-self.composeTextField.text.length];
+
+}
+- (void) setUpSubViews {
+    self.countLabel = [[UILabel alloc] initWithFrame:CGRectMake(225, 12, 40, 20)];
+    self.countLabel.textColor = [UIColor whiteColor];
+    [self.navigationController.navigationBar addSubview:self.countLabel];
 }
 - (void) fillUIElementsWithData {
     self.lblScreenName.text = self.user.screenName;
@@ -100,5 +99,11 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+#pragma mark - textFieldDelegate
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    
+    self.countLabel.text = [NSString stringWithFormat:@"%ld",(long)MAX_TWEET_COUNT-textField.text.length];
+    
+}
 @end
