@@ -10,10 +10,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "TwitterClient.h"
 #import <QuartzCore/QuartzCore.h>
-
-//NSString * const ReplyToTweetClicked = @"ReplyToTweetClicked";
-//NSString * const FavoriteClicked = @"FavoriteClicked";
-//NSString * const RetweetClicked = @"RetweetClicked";
+#import "AppDelegate.h"
 
 
 @interface TweetDetailViewController ()
@@ -29,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *lblCountRetweets;
 @property (weak, nonatomic) IBOutlet UILabel *lblCountFavorites;
 @end
+
 
 @implementation TweetDetailViewController
 
@@ -76,7 +74,7 @@
 }
 
 - (IBAction)onReplyClick:(id)sender {
-//    [[NSNotificationCenter defaultCenter] postNotificationName:ReplyToTweetClicked object:self userInfo: @{@"sender": sender, @"tweet": self.tweet}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:ReplyToTweetClicked object:self userInfo: @{@"sender": sender, @"tweet": self.tweet}];
 }
 
 - (IBAction)onRetweetClick:(id)sender {

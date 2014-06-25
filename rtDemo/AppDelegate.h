@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+extern NSString *const ReplyToTweetClicked;
+extern NSString *const FavoriteClicked;
+extern NSString *const RetweetClicked;
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

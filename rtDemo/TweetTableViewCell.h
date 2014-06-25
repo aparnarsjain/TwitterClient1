@@ -21,8 +21,4 @@
 @property (weak, nonatomic) IBOutlet UILabel *lblTime;
 @property (nonatomic, strong) Tweet *tweet;
 
-extern NSString *const ReplyToTweetClicked;
-extern NSString *const FavoriteClicked;
-extern NSString *const RetweetClicked;
-
 @end

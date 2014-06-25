@@ -13,7 +13,6 @@
                 <outlet property="lblScreenName" destination="Iv6-6c-BnL" id="f5A-K3-M2a"/>
                 <outlet property="lblText" destination="hlh-Ig-1Mt" id="c61-X2-Mfe"/>
                 <outlet property="lblTweetTime" destination="K6q-v6-e7T" id="5C2-BH-Nzh"/>
-                <outlet property="onReplyClick" destination="sf5-Wa-TmQ" id="JCc-iZ-19a"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
