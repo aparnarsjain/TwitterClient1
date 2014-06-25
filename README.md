@@ -22,6 +22,7 @@ Completed user stories:
 - [x] User can tap on a tweet to view it, with controls to retweet, favorite, and reply.
 
 ####Optionals
+- [x] After creating a new tweet, a user should be able to view it in the timeline immediately without refetching the timeline from the network.
 
 ####Pods used-
 
