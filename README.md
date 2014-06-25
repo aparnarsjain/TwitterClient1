@@ -32,7 +32,7 @@ Completed user stories:
 - MHPrettyDate
 
 ####Preview-
-![alt tag]()
+![alt tag](https://github.com/aparnarsjain/TwitterClient1/blob/master/twitter.gif)
  
 
 
