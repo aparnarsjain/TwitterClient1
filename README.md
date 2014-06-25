@@ -23,6 +23,7 @@ Completed user stories:
 
 ####Optionals
 - [x] After creating a new tweet, a user should be able to view it in the timeline immediately without refetching the timeline from the network.
+- [x] When composing, you should have a countdown in the upper right for the tweet limit.
 
 ####Pods used-
 
