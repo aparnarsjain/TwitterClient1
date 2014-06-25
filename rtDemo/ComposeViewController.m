@@ -74,8 +74,20 @@ NSInteger const MAX_TWEET_COUNT = 140;
     [self setUpSubViews];
 
     self.composeTextField.delegate = self;
+    [self.composeTextField addTarget:self
+                  action:@selector(textFieldDidChange:)
+        forControlEvents:UIControlEventEditingChanged];
     self.countLabel.text = [NSString stringWithFormat:@"%ld",(long)MAX_TWEET_COUNT-self.composeTextField.text.length];
 
+}
+- (void) textFieldDidChange: (id)sender {
+    UITextField *currTextField = sender;
+    NSNumber *charactersRemaining = [NSNumber numberWithLong:(long)MAX_TWEET_COUNT-currTextField.text.length];
+    if (charactersRemaining == 0) {
+        currTextField.enabled = NO;
+        [currTextField resignFirstResponder];
+    }
+    self.countLabel.text = [NSString stringWithFormat:@"%ld",(long)MAX_TWEET_COUNT-currTextField.text.length];
 }
 - (void) setUpSubViews {
     self.countLabel = [[UILabel alloc] initWithFrame:CGRectMake(225, 12, 40, 20)];
@@ -99,11 +111,5 @@ NSInteger const MAX_TWEET_COUNT = 140;
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-#pragma mark - textFieldDelegate
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField{
-    
-    self.countLabel.text = [NSString stringWithFormat:@"%ld",(long)MAX_TWEET_COUNT-textField.text.length];
-    
-}
 @end
