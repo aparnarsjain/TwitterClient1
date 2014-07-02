@@ -8,7 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol MainViewControllerDelegate <NSObject>
+
+@optional
+- (void) animateViews;
+
+@end
 @interface MainViewController : UIViewController
 @property (nonatomic, strong) UIViewController *leftViewController;
+@property (nonatomic, assign) id<MainViewControllerDelegate> delegate;
 
 @end

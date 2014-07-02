@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MainViewController.h"
 
-@interface AccountsViewController : UIViewController
+@interface AccountsViewController : UIViewController<MainViewControllerDelegate>
 
 @end

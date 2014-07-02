@@ -7,14 +7,12 @@
 //
 
 #import "AccountsViewController.h"
+#import "MainViewController.h"
 
 @interface AccountsViewController ()
 @property  (strong, nonatomic) NSArray *subViews;
-@property (weak, nonatomic) IBOutlet UIView *contentView;
-@property (weak, nonatomic) IBOutlet UIButton *btnAccounts;
-@property (weak, nonatomic) IBOutlet UIButton *btnHome;
-- (IBAction)onAccountsClick:(id)sender;
-- (IBAction)onHomeClick:(id)sender;
+@property (nonatomic, strong) MainViewController *mainPanelViewController;
+
 @end
 
 @implementation AccountsViewController
@@ -30,29 +28,30 @@
 
 - (void)viewDidLoad
 {
+    self.mainPanelViewController.delegate = self;
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     UINib *nib = [UINib nibWithNibName:@"Views" bundle:nil];
     self.subViews = [nib instantiateWithOwner:nil options:nil];
     
     UIView *tealView = self.subViews[0];
-    [self.contentView addSubview:tealView];
+    [self.view addSubview:tealView];
     
     UIView *orangeView = self.subViews[1];
     orangeView.frame = CGRectMake(0, 200, orangeView.frame.size.width, orangeView.frame.size.height);
-    [self.contentView addSubview:orangeView];
-    self.contentView.clipsToBounds = YES;
-    [self setUpGestures];
+    [self.view addSubview:orangeView];
+    self.view.clipsToBounds = YES;
+//    [self setUpGestures];
 
 }
--(void) setUpGestures {
-    UILongPressGestureRecognizer *holdRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(animateViews:)];
-    [holdRecognizer setMinimumPressDuration:1];
-    [self.btnAccounts addGestureRecognizer:holdRecognizer];
-
-
-}
--(void) animateViews: (UILongPressGestureRecognizer *)gestureRecognizer {
+//-(void) setUpGestures {
+//    UILongPressGestureRecognizer *holdRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(animateViews:)];
+//    [holdRecognizer setMinimumPressDuration:1];
+//    [self.btnAccounts addGestureRecognizer:holdRecognizer];
+//
+//
+//}
+-(void) animateViews {
     UIView *orangeView = self.subViews[1];
     orangeView.frame = CGRectMake(0, 200, orangeView.frame.size.width, orangeView.frame.size.height);
     [UIView animateWithDuration:2.0 delay:0 options:UIViewAnimationOptionBeginFromCurrentState

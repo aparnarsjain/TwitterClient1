@@ -244,6 +244,9 @@
 		B9B0104B196377B7008984EA /* burger.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B0104A196377B7008984EA /* burger.png */; };
 		B9B0104D196380CF008984EA /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B0104C196380CF008984EA /* menu.png */; };
 		B9B0104F196380D3008984EA /* menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B0104E196380D3008984EA /* menu@2x.png */; };
+		B9B010531963C27D008984EA /* AccountsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9B010511963C27D008984EA /* AccountsViewController.m */; };
+		B9B010541963C27D008984EA /* AccountsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B9B010521963C27D008984EA /* AccountsViewController.xib */; };
+		B9B010561963C5D2008984EA /* Views.xib in Resources */ = {isa = PBXBuildFile; fileRef = B9B010551963C5D2008984EA /* Views.xib */; };
 		B9C8DD111954D3E5002B4A4A /* Tweet.m in Sources */ = {isa = PBXBuildFile; fileRef = B9C8DD101954D3E5002B4A4A /* Tweet.m */; };
 		B9C8DD161955464D002B4A4A /* TweetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B9C8DD141955464D002B4A4A /* TweetTableViewCell.m */; };
 		B9C8DD171955464D002B4A4A /* TweetTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B9C8DD151955464D002B4A4A /* TweetTableViewCell.xib */; };
@@ -531,6 +534,10 @@
 		B9B0104A196377B7008984EA /* burger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = burger.png; sourceTree = "<group>"; };
 		B9B0104C196380CF008984EA /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
 		B9B0104E196380D3008984EA /* menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu@2x.png"; sourceTree = "<group>"; };
+		B9B010501963C27D008984EA /* AccountsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountsViewController.h; sourceTree = "<group>"; };
+		B9B010511963C27D008984EA /* AccountsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountsViewController.m; sourceTree = "<group>"; };
+		B9B010521963C27D008984EA /* AccountsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccountsViewController.xib; sourceTree = "<group>"; };
+		B9B010551963C5D2008984EA /* Views.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Views.xib; sourceTree = "<group>"; };
 		B9C8DD0F1954D3E5002B4A4A /* Tweet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tweet.h; sourceTree = "<group>"; };
 		B9C8DD101954D3E5002B4A4A /* Tweet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tweet.m; sourceTree = "<group>"; };
 		B9C8DD131955464D002B4A4A /* TweetTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetTableViewCell.h; sourceTree = "<group>"; };
@@ -640,6 +647,10 @@
 				B9514D7E193673B10073789F /* AppDelegate.m */,
 				B9514D80193673B10073789F /* Images.xcassets */,
 				B9514D75193673B10073789F /* Supporting Files */,
+				B9B010501963C27D008984EA /* AccountsViewController.h */,
+				B9B010551963C5D2008984EA /* Views.xib */,
+				B9B010511963C27D008984EA /* AccountsViewController.m */,
+				B9B010521963C27D008984EA /* AccountsViewController.xib */,
 				B9C9E6C5195FC35700C68143 /* MainViewController.h */,
 				B9C9E6C6195FC35700C68143 /* MainViewController.m */,
 				B9C9E6C7195FC35700C68143 /* MainViewController.xib */,
@@ -1147,6 +1158,7 @@
 				B95A5EB2195623AF00A049A8 /* 34-coffee.png in Resources */,
 				B95A5F31195623AF00A049A8 /* 161-calculator.png in Resources */,
 				B95A5ED3195623AF00A049A8 /* 67-tshirt.png in Resources */,
+				B9B010561963C5D2008984EA /* Views.xib in Resources */,
 				B92FFD3C1957F5CE0029819E /* retweet.png in Resources */,
 				B95A5ECF195623AF00A049A8 /* 63-runner.png in Resources */,
 				B95A5F24195623AF00A049A8 /* 148-doghouse.png in Resources */,
@@ -1173,6 +1185,7 @@
 				B95A5EFA195623AF00A049A8 /* 106-sliders.png in Resources */,
 				B95A5EDB195623AF00A049A8 /* 75-phone.png in Resources */,
 				B95A5EEC195623AF00A049A8 /* 92-test-tube.png in Resources */,
+				B9B010541963C27D008984EA /* AccountsViewController.xib in Resources */,
 				B95A5F11195623AF00A049A8 /* 129-golf.png in Resources */,
 				B95A5F0E195623AF00A049A8 /* 126-moon.png in Resources */,
 				B95A5F2D195623AF00A049A8 /* 157-wrench.png in Resources */,
@@ -1359,6 +1372,7 @@
 				B9514DAB1936BAEC0073789F /* TweetsViewController.m in Sources */,
 				B9C9E6E1195FC35700C68143 /* HamburgerMenuTableViewCell.m in Sources */,
 				B9C9E6E619608A9100C68143 /* UserStatsTableViewCell.m in Sources */,
+				B9B010531963C27D008984EA /* AccountsViewController.m in Sources */,
 				B9C9E6EC1960D1A400C68143 /* MentionsViewController.m in Sources */,
 				B9C8DD161955464D002B4A4A /* TweetTableViewCell.m in Sources */,
 				B9C8DD111954D3E5002B4A4A /* Tweet.m in Sources */,

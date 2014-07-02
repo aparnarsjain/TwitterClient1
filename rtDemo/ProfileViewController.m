@@ -47,8 +47,12 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-    self.headerView = [[ProfileHeaderView alloc] init];
-    self.headerView.clipsToBounds = YES;
+//    self.headerView = [[ProfileHeaderView alloc] init];
+//    self.headerView.clipsToBounds = YES;
+//    self.tableView.tableHeaderView = self.headerView;
+    
+    self.headerView = [[ProfileHeaderView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)];
+    self.headerView.clipsToBounds = NO;
     self.tableView.tableHeaderView = self.headerView;
 
     UINib *cellNib = [UINib nibWithNibName:@"TweetTableViewCell" bundle:nil];
