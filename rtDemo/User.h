@@ -10,9 +10,10 @@
 #import "Mantle.h"
 
 @interface User : MTLModel <MTLJSONSerializing>
+
 @property (nonatomic, copy, readonly) NSString *userImageUrl;
-//@property (nonatomic, copy, readonly) NSNumber *retweets;
-//@property (nonatomic, copy, readonly) NSNumber *favorites;
 @property (nonatomic, copy, readonly) NSString *name;
 @property (nonatomic, copy, readonly) NSString *screenName;
+@property (nonatomic, copy, readonly) NSString *profileBannerUrl;
+
 @end

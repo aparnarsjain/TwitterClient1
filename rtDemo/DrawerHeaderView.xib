@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LeftPanelViewController">
+            <connections>
+                <outlet property="imgUserProfile" destination="FJB-wI-7uV" id="iXv-yU-Ayp"/>
+                <outlet property="lblName" destination="IeL-7O-fnj" id="F0q-Jf-Bpb"/>
+                <outlet property="lblScreenName" destination="aJh-Pz-TRQ" id="yTe-3w-xLB"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="191" height="124"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FJB-wI-7uV">
+                    <rect key="frame" x="20" y="30" width="77" height="74"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="74" id="BYd-50-8f5"/>
+                        <constraint firstAttribute="width" constant="77" id="ngx-bc-u6i"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IeL-7O-fnj">
+                    <rect key="frame" x="105" y="30" width="42" height="15"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="42" id="QdX-2w-AEd"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aJh-Pz-TRQ">
+                    <rect key="frame" x="105" y="89" width="42" height="15"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="42" id="sTt-gS-5i8"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="IeL-7O-fnj" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="30" id="A1B-DK-71B"/>
+                <constraint firstItem="IeL-7O-fnj" firstAttribute="leading" secondItem="FJB-wI-7uV" secondAttribute="trailing" constant="8" id="Bb0-Z3-mRP"/>
+                <constraint firstItem="FJB-wI-7uV" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="30" id="fGu-cK-fHD"/>
+                <constraint firstAttribute="bottom" secondItem="aJh-Pz-TRQ" secondAttribute="bottom" constant="20" id="hij-HA-0tX"/>
+                <constraint firstItem="aJh-Pz-TRQ" firstAttribute="leading" secondItem="FJB-wI-7uV" secondAttribute="trailing" constant="8" id="iFi-Xo-jiQ"/>
+                <constraint firstItem="FJB-wI-7uV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="sEd-8u-4c9"/>
+            </constraints>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        </view>
+    </objects>
+</document>

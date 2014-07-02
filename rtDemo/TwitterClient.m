@@ -10,6 +10,7 @@
 #import "Tweet.h"
 #import "TweetsViewController.h"
 #import "AppDelegate.h"
+#import "User.h"
 
 AppDelegate *appDelegate;
 
@@ -90,6 +91,26 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure{
     NSString *postString = [NSString stringWithFormat:@"1.1/statuses/retweet/%@.json", params[@"id"]];
     return [self POST:postString parameters:params success:success failure:failure];
 }
+
+- (AFHTTPRequestOperation *)profileBanner:(NSDictionary *)params andSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure{
+    return [self GET:@"1.1/users/profile_banner.json" parameters:params success:success failure:failure];
+    
+}
+- (AFHTTPRequestOperation *)userTimeline:(NSDictionary *)params andSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure{
+    return [self GET:@"1.1/statuses/user_timeline.json" parameters:params success:success failure:failure];
+    
+}
+- (AFHTTPRequestOperation *)userLookup:(NSDictionary *)params andSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure{
+    return [self GET:@"1.1/users/lookup.json" parameters:params success:success failure:failure];
+}
+- (AFHTTPRequestOperation *)mentionsTimeLineWithSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure{
+    return [self GET:@"1.1/statuses/mentions_timeline.json" parameters:nil success:success failure:failure];
+}
+
 - (BOOL)openURL:(NSURL *)url {
     if ([url.scheme isEqualToString:@"cptwitter"]) {
         if ([url.host isEqualToString:@"oauth"]) {
@@ -105,7 +126,19 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure{
                         for (NSInteger i = 0; i < [responseObject count]; i++) {
                             [self.tweets addObject:[MTLJSONAdapter modelOfClass:[Tweet class] fromJSONDictionary:responseObject[i] error:nil]];
                         }
-//                        NSLog(@"formatted dictionaries- %@", responseObject);
+                        NSLog(@"formatted dictionaries- %@", self.tweets);
+                        
+                        //get the logged in user
+                        [client userWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+                            self.user =  [MTLJSONAdapter modelOfClass:[User class] fromJSONDictionary:responseObject error:nil];
+                            NSLog(@"user object, %@", responseObject);
+                            [[NSUserDefaults standardUserDefaults] setObject:self.user.screenName forKey:@"logged_in_user_screen_name"];
+                            [[NSUserDefaults standardUserDefaults] setObject:self.user.name forKey:@"logged_in_user"];
+                            [[NSUserDefaults standardUserDefaults] setObject:self.user.userImageUrl forKey:@"logged_in_user_profile_image"];
+                            [[NSUserDefaults standardUserDefaults] synchronize];
+                        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                            NSLog(@"No user %@", error);
+                        }];
 
                         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"signed_in"];
                             [[NSUserDefaults standardUserDefaults] synchronize];

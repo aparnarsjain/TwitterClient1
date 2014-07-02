@@ -10,8 +10,11 @@
 #import "CenterViewController.h"
 #import "LeftPanelViewController.h"
 #import "SecondViewController.h"
-#import "FirstViewController.h"
+#import "ProfileViewController.h"
 #import "HamburgerMenuTableViewCell.h"
+#import "TweetsViewController.h"
+#import "AppDelegate.h"
+#import "MentionsViewController.h"
 
 #define CENTER_TAG 1
 #define LEFT_PANEL_TAG 2
@@ -20,18 +23,20 @@
 #define PANEL_WIDTH 120
 #define FRACTION_TO_COMPLETE 2
 
-@interface MainViewController () <CenterViewControllerDelegate, UIGestureRecognizerDelegate, UITableViewDataSource, UITableViewDelegate, LeftPanelViewControllerDelegate>
+AppDelegate *appDelegate;
+
+@interface MainViewController () <CenterViewControllerDelegate, UIGestureRecognizerDelegate, LeftPanelViewControllerDelegate>
 @property (nonatomic, strong) CenterViewController *centerViewController;
 @property (nonatomic, strong) LeftPanelViewController *leftPanelViewController;
 @property (nonatomic, assign) BOOL showingLeftPanel;
 @property (nonatomic, assign) BOOL showPanel;
 @property (nonatomic, assign) CGPoint preVelocity;
 @property (nonatomic, strong) NSArray *viewControllers;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UILabel *lblView;
 @property (strong, nonatomic) UIBarButtonItem *leftPanelButton;
 @property (strong, nonatomic) UIViewController *currentViewController;
 @property (strong, nonatomic) UIViewController *previousViewController;
+@property (strong, nonatomic) UINavigationController *navigationController;
+
 
 @end
 
@@ -42,8 +47,10 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.viewControllers = @[[[FirstViewController alloc] init],
-                                 [[SecondViewController alloc] init]];
+        self.viewControllers = @[[[TweetsViewController alloc] init],
+                                 [[ProfileViewController alloc] init],
+                                 [[TweetsViewController alloc] init]
+                                 ];
     }
     return self;
 }
@@ -53,32 +60,46 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self setUpView];
-//    self.tableView.delegate = self;
-//    self.tableView.dataSource = self;
+    
+    //TODO: put this in the left menu
+    UIBarButtonItem *signOutButton = [[UIBarButtonItem alloc] initWithTitle:@"Sign Out" style:UIBarButtonItemStyleDone target:self action:@selector(onSignOutButtonClick)];
+    [signOutButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName,nil] forState:UIControlStateNormal];
+    self.navigationItem.rightBarButtonItem = signOutButton;
+
 }
-
+- (void)onSignOutButtonClick {
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"signed_in"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    NSLog(@"signed in in tweets view controller %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"signed_in"]);
+    appDelegate =[[UIApplication sharedApplication] delegate];
+    [appDelegate loadAppropriateViewController];
+}
 - (void)setUpView {
-    self.leftPanelButton = [[UIBarButtonItem alloc] initWithTitle:@"LeftPanel" style:UIBarButtonItemStyleDone target:self action:@selector(btnMovePanelRight:)];
-    self.leftPanelButton.tag = 1;
+    self.leftPanelButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu.png"] style:UIBarButtonItemStylePlain target:self action:@selector(btnMovePanelRight:)];
 
-    self.navigationItem.leftBarButtonItem = self.leftPanelButton;
     self.currentViewController = self.viewControllers[0];
     self.previousViewController = self.currentViewController;
     self.currentViewController.view.tag = CENTER_TAG;
+    
+    _navigationController = [[UINavigationController alloc] initWithRootViewController:self.currentViewController];
+    [_navigationController willMoveToParentViewController:self];
+    self.leftPanelButton.tag = 1;
 
-    [self.view addSubview:self.currentViewController.view];
-    [self addChildViewController:_currentViewController];
+    self.currentViewController.navigationItem.leftBarButtonItem = self.leftPanelButton;
+
+    self.navigationController.view.frame = self.view.frame;
+    [self.view addSubview:self.navigationController.view];
     [self setupGestures];
     
 }
 - (void)btnMovePanelRight:(id)sender {
     UIButton *button = sender;
+    NSLog(@"button tag %d", button.tag);
     switch (button.tag){
         case 0: {
             [self movePanelToOriginalPosition];
             break;
         }
-            
         case 1: {
             [self movePanelRight];
             break;
@@ -91,13 +112,13 @@
 - (void)showCenterViewWithShadow:(BOOL)value withOffset:(double)offset
 {
     if(value){
-        [_currentViewController.view.layer setCornerRadius:CORNER_RADIUS];
-        [_currentViewController.view.layer setShadowColor:[UIColor blackColor].CGColor];
-        [_currentViewController.view.layer setShadowOpacity:0.8];
-        [_currentViewController.view.layer setShadowOffset:CGSizeMake(offset, offset)];
+        [_navigationController.view.layer setCornerRadius:CORNER_RADIUS];
+        [_navigationController.view.layer setShadowColor:[UIColor blackColor].CGColor];
+        [_navigationController.view.layer setShadowOpacity:0.8];
+        [_navigationController.view.layer setShadowOffset:CGSizeMake(offset, offset)];
     }else {
-        [_currentViewController.view.layer setCornerRadius:0.0f];
-        [_currentViewController.view.layer setShadowOffset:CGSizeMake(offset, offset)];
+        [_navigationController.view.layer setCornerRadius:0.0f];
+        [_navigationController.view.layer setShadowOffset:CGSizeMake(offset, offset)];
     }
 }
 - (UIView *)getLeftView
@@ -132,7 +153,7 @@
     
     [UIView animateWithDuration:SLIDE_TIMING delay:0 options:UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
-                         _currentViewController.view.frame = CGRectMake(self.view.frame.size.width - PANEL_WIDTH, 0, self.view.frame.size.width, self.view.frame.size.height);
+                         _navigationController.view.frame = CGRectMake(self.view.frame.size.width - PANEL_WIDTH, 0, self.view.frame.size.width, self.view.frame.size.height);
                      }
                      completion:^(BOOL finished) {
                          if (finished) {
@@ -146,7 +167,6 @@
 {
     if (_leftPanelViewController != nil) {
 //        [self.leftPanelViewController.view removeFromSuperview];
-        
         self.leftPanelViewController = nil;
         
         self.leftPanelButton.tag = 1;
@@ -157,12 +177,13 @@
 }
 
 - (void) movePanelToOriginalPosition {
+    self.navigationController.view.frame = CGRectMake(self.view.frame.size.width - PANEL_WIDTH, 0, self.view.frame.size.width, self.view.frame.size.height);
+
     [UIView animateWithDuration:SLIDE_TIMING delay:0 options:UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
                          NSLog(@"current view controller %@", _currentViewController);
-                         
-
-                         _currentViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+//                         self.navigationController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+                         self.navigationController.view.frame = self.view.frame;
                      }
                      completion:^(BOOL finished) {
                          if (finished) {
@@ -191,7 +212,7 @@
     [panRecognizer setMaximumNumberOfTouches:1];
     [panRecognizer setDelegate:self];
     
-    [_currentViewController.view addGestureRecognizer:panRecognizer];
+    [_navigationController.view addGestureRecognizer:panRecognizer];
     
 }
 
@@ -223,70 +244,44 @@
         }
     }
     if([(UIPanGestureRecognizer *)sender state] == UIGestureRecognizerStateChanged){
-        _showPanel = abs([sender view].center.x - _currentViewController.view.frame.size.width/2) > _currentViewController.view.frame.size.width/FRACTION_TO_COMPLETE;
+        _showPanel = abs([sender view].center.x - _navigationController.view.frame.size.width/2) > _navigationController.view.frame.size.width/FRACTION_TO_COMPLETE;
         NSLog(@"velocity %f", velocity.x);
         [sender view].center = CGPointMake([sender view].center.x + translatedPoint.x, [sender view].center.y);
         [(UIPanGestureRecognizer *)sender setTranslation:CGPointMake(0, 0) inView:self.view];
         
-        if(velocity.x*_preVelocity.x + velocity.y*_preVelocity.y > 0){
-//            NSLog(@"same direction");
-        }else{
-//            NSLog(@"opposite direction");
-        }
-        
         _preVelocity = velocity;
     }
-}
-#pragma mark Table View Delegate methods
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-//	return [self.menuItems count];
-    return 1;
-    
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    	return [self.viewControllers count];
-}
-
-- (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-//    MenuItem *item = self.menuItems[section];
-//	return item.title;
-    return @"Title";
-}
-//
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    HamburgerMenuTableViewCell *menuCell = [tableView dequeueReusableCellWithIdentifier:@"HamburgerMenuTableViewCell" forIndexPath:indexPath];
-//    MenuItem *item = self.menuItems[indexPath.section];
-    menuCell.lblCellText.text = @"dynamic text";
-    
-    return menuCell;
-    
-}
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-//    UIView *currView = ((UIViewController *)self.viewControllers[indexPath.row]).view;
-    UIView *currView = ((UIViewController *)self.viewControllers[indexPath.row]).view;
-    currView.frame = self.view.frame;
-    [self.view addSubview:currView];
-    [self.view bringSubviewToFront:currView];
-
 }
 
 #pragma LeftPanel Delegate
 - (void) rowClicked:(NSInteger)row {
-    self.previousViewController = self.currentViewController;
+    self.previousViewController = self.navigationController;
+    
     self.currentViewController = self.viewControllers[row];
+    [self.navigationController setViewControllers:@[self.currentViewController]];
+
+    self.currentViewController.navigationItem.leftBarButtonItem = self.leftPanelButton;
+    if (row == 2) { //mentions row, load normal timeline
+        TweetsViewController *currController = [[TweetsViewController alloc] init];
+        currController.mentions = YES;
+        [self.navigationController setViewControllers:@[currController]];
+        currController.navigationItem.leftBarButtonItem = self.leftPanelButton;
+        
+    }
     if (self.previousViewController != self.currentViewController) {
-        UIView *currView = self.currentViewController.view;
+        UIView *currView = self.navigationController.view;
         currView.frame = self.view.frame;
         [self.previousViewController.view removeFromSuperview];
+        self.previousViewController = nil;
         [self.view addSubview:currView];
     }
-    [self movePanelToOriginalPosition];
 
+    [self movePanelToOriginalPosition];
+    [self setupGestures];
+
+
+}
+- (NSInteger)numberOfRowsInSection {
+    return [self.viewControllers count];
 }
 @end

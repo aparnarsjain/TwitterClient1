@@ -4,9 +4,9 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProfileViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MentionsViewController">
             <connections>
-                <outlet property="tableView" destination="CsN-tc-0vU" id="MZ9-pL-4oH"/>
+                <outlet property="tableView" destination="RCP-Ra-qag" id="ac3-Et-Auf"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -15,18 +15,18 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="749" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="CsN-tc-0vU">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="RCP-Ra-qag">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
             </subviews>
-            <color key="backgroundColor" red="0.69193155219055424" green="0.9161258157232347" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="CsN-tc-0vU" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="95F-Mu-vaL"/>
-                <constraint firstAttribute="bottom" secondItem="CsN-tc-0vU" secondAttribute="bottom" id="AvC-B6-ass"/>
-                <constraint firstItem="CsN-tc-0vU" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="xy7-Ga-3Wd"/>
-                <constraint firstAttribute="trailing" secondItem="CsN-tc-0vU" secondAttribute="trailing" id="ycg-AE-EhU"/>
+                <constraint firstItem="RCP-Ra-qag" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="HNR-xb-zE5"/>
+                <constraint firstItem="RCP-Ra-qag" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="OlJ-i5-q1Y"/>
+                <constraint firstAttribute="trailing" secondItem="RCP-Ra-qag" secondAttribute="trailing" id="UBZ-xC-MHs"/>
+                <constraint firstAttribute="bottom" secondItem="RCP-Ra-qag" secondAttribute="bottom" id="zjY-9c-abc"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>

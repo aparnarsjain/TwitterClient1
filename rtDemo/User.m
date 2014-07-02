@@ -14,7 +14,8 @@
        return @{
              @"userImageUrl": @"profile_image_url",
              @"name": @"name",
-             @"screenName": @"screen_name"
+             @"screenName": @"screen_name",
+             @"profileBannerUrl": @"profile_banner_url"
             };    
 }
 

@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface FirstViewController : UIViewController
-
+@class User;
+@interface ProfileViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
+@property (nonatomic, strong) User *user;
+@property (nonatomic, strong) NSString *screenName;
 @end

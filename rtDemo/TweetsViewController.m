@@ -13,7 +13,7 @@
 #import "ComposeViewController.h"
 #import "TwitterClient.h"
 #import "TweetDetailViewController.h"
-
+#import "ProfileViewController.h"
 AppDelegate *appDelegate;
 
 @interface TweetsViewController ()
@@ -37,7 +37,8 @@ AppDelegate *appDelegate;
     return self;
 }
 - (void)viewWillAppear:(BOOL)animated {
-    }
+    NSLog(@"MEntions %hhd", self.mentions);
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -48,19 +49,22 @@ AppDelegate *appDelegate;
     UINib *cellNib = [UINib nibWithNibName:@"TweetTableViewCell" bundle:nil];
     [self.tableView registerNib:cellNib forCellReuseIdentifier:@"TweetTableViewCell"];
     _stubCell = [cellNib instantiateWithOwner:nil options:nil][0];
-    UIBarButtonItem *signOutButton = [[UIBarButtonItem alloc] initWithTitle:@"Sign Out" style:UIBarButtonItemStyleDone target:self action:@selector(onSignOutButtonClick)];
-    [signOutButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName,nil] forState:UIControlStateNormal];
-    self.navigationItem.leftBarButtonItem = signOutButton;
-
+    
     UIBarButtonItem *composeButton = [[UIBarButtonItem alloc] initWithTitle:@"New" style:UIBarButtonItemStyleDone target:self action:@selector(onComposeButtonClick:)];
     [composeButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName,nil] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = composeButton;
     self.client = [TwitterClient instance];
-    if([self.client.tweets count] == 0){
-        [self loadData:nil];
+
+    if(self.mentions){
+        [self loadMentionsData];
     }else {
-        self.tweets = self.client.tweets;
+        if([self.client.tweets count] == 0){
+            [self loadData:nil];
+        }else {
+            self.tweets = self.client.tweets;
+        }
     }
+
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserverForName:ReplyToTweetClicked object:nil queue:nil usingBlock:^(NSNotification *notification)
@@ -142,6 +146,19 @@ AppDelegate *appDelegate;
        NSLog(@"error loading timeline %@", error);
    }];
 }
+- (void)loadMentionsData {
+    [self.client mentionsTimeLineWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        self.tweets = [[NSMutableArray alloc] init];
+        for (NSInteger i = 0; i < [responseObject count]; i++) {
+            [self.tweets addObject:[MTLJSONAdapter modelOfClass:[Tweet class] fromJSONDictionary:responseObject[i] error:nil]];
+        }
+        [self.tableView reloadData];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"error loading timeline %@", error);
+    }];
+
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -158,13 +175,7 @@ AppDelegate *appDelegate;
     [self presentViewController:nc animated:YES completion:nil];
 }
 
-- (void)onSignOutButtonClick {
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"signed_in"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    NSLog(@"signed in in tweets view controller %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"signed_in"]);    
-    appDelegate =[[UIApplication sharedApplication] delegate];
-    [appDelegate loadAppropriateViewController];
-}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return [self.tweets count];
 }
@@ -179,6 +190,7 @@ AppDelegate *appDelegate;
     TweetDetailViewController *vc = [[TweetDetailViewController alloc] init];
     vc.tweet = self.tweets[indexPath.row];
     [self.navigationController pushViewController:vc animated:YES];
+    
 
 }
 
@@ -186,6 +198,21 @@ AppDelegate *appDelegate;
  TweetTableViewCell *tweetCell = [tableView dequeueReusableCellWithIdentifier:@"TweetTableViewCell" forIndexPath:indexPath];
     tweetCell.tweet = self.tweets[indexPath.row];
     tweetCell.btnReplyTweet.tag = indexPath.row;
+    
+    tweetCell.imgUser.userInteractionEnabled = YES;
+    tweetCell.imgUser.tag = indexPath.row;
+
+    UITapGestureRecognizer *tapped = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showProfile:)];
+    tapped.numberOfTapsRequired = 1;
+    [tweetCell.imgUser addGestureRecognizer:tapped];
+
     return tweetCell;
+}
+- (void)showProfile: (UITapGestureRecognizer *)sender
+{
+    ProfileViewController *vc = [[ProfileViewController alloc] init];
+    Tweet *currTweet = self.tweets[sender.view.tag];
+    vc.screenName = currTweet.screenName;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 @end

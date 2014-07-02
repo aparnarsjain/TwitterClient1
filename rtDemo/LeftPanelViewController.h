@@ -12,6 +12,7 @@
 
 @optional
 - (void) rowClicked:(NSInteger) row;
+- (NSInteger) numberOfRowsInSection;
 
 @end
 

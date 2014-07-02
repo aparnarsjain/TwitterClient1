@@ -11,13 +11,21 @@
 #import "MHPrettyDate.h"
 #import <QuartzCore/QuartzCore.h>
 #import "ComposeViewController.h"
+#import "ProfileViewController.h"
 
 NSString * const ReplyToTweetClicked = @"ReplyToTweetClicked";
 NSString * const FavoriteClicked = @"FavoriteClicked";
 NSString * const RetweetClicked = @"RetweetClicked";
 
 @implementation TweetTableViewCell
+
 static NSDateFormatter *formatter = nil;
+
+- (IBAction)onImageClick:(id)sender {
+//    ProfileViewController *vc = [[ProfileViewController alloc] init];
+//    vc.screenName = self.tweets[indexPath.row];
+//    [self.navigationController pushViewController:vc animated:YES];
+}
 - (IBAction)onReplyClick:(id)sender {
     //open the compose view controller with the handle inserted
     [[NSNotificationCenter defaultCenter] postNotificationName:ReplyToTweetClicked object:self userInfo: @{@"sender": sender, @"tweet": self.tweet}];

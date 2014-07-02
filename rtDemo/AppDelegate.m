@@ -13,6 +13,7 @@
 #import "Tweet.h"
 #import "ComposeViewController.h"
 #import "UIColor+ExpandedCategory.h"
+#import "MainViewController.h"
 
 //adding a category to NSURL and the following method automagically gets added to NSURL
 @implementation NSURL (dictionaryFromQueryString)
@@ -50,11 +51,11 @@
 }
 - (void)loadAppropriateViewController {
     NSLog(@"signed in? %hhd", [[NSUserDefaults standardUserDefaults] boolForKey:@"signed_in"] );
-    UINavigationController *nvc = [[NSUserDefaults standardUserDefaults] boolForKey:@"signed_in"] ? [[UINavigationController alloc] initWithRootViewController:[[TweetsViewController alloc] init]] : [[UINavigationController alloc] initWithRootViewController:[[LoginViewController alloc] init]];
-//    [nvc.navigationBar setBarTintColor:[UIColor colorWithRed:0 green:122 blue:255 alpha:1.0]];
+    UIViewController *vc = [[NSUserDefaults standardUserDefaults] boolForKey:@"signed_in"] ? [[MainViewController alloc] init] : [[LoginViewController alloc] init];
     [[UINavigationBar appearance] setBarTintColor:[UIColor colorFromHexString:@"#00aced"]];
-    [nvc.navigationBar setTranslucent:NO];
-    self.window.rootViewController = nvc;
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+
+    self.window.rootViewController = vc;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

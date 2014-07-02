@@ -9,4 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface TweetsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
+@property (nonatomic, assign) BOOL mentions;
 @end
