@@ -64,6 +64,9 @@ Twitter Redux
 - [] Swipe to delete an account
  
 ![alt tag](https://raw.githubusercontent.com/aparnarsjain/TwitterClient1/master/twitter_redux.gif)
+
+####Account switching animation gif
+
 ![alt tag](https://github.com/aparnarsjain/TwitterClient1/blob/master/twitter_redux_accounts.gif)
 
 
