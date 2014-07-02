@@ -63,7 +63,10 @@ Twitter Redux
 - [] Include a plus button to Add an Account
 - [] Swipe to delete an account
  
-![alt tag]()
+![alt tag](https://raw.githubusercontent.com/aparnarsjain/TwitterClient1/master/twitter_redux.gif)
 
+####Account switching animation gif
+
+![alt tag](https://raw.githubusercontent.com/aparnarsjain/TwitterClient1/master/twitter_redux_accounts.gif)
 
 
